@@ -15,6 +15,7 @@ import androidx.fragment.app.DialogFragment;
 public class AddCityFragment extends DialogFragment {
     interface AddCityDialogListener {
         void addCity(City city);
+
     }
     private AddCityDialogListener listener;
 
@@ -37,7 +38,7 @@ public class AddCityFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder
                 .setView(view)
-                .setTitle("Add a city")
+                .setTitle("Add/Edit a city")
                 .setNegativeButton("Cancel", null)
                 .setPositiveButton("Add", (dialog, which) -> {
                     String cityName = editCityName.getText().toString();

@@ -1,6 +1,8 @@
 package com.example.listycity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -12,13 +14,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity implements
-        AddCityFragment.AddCityDialogListener {
+        AddCityFragment.AddCityDialogListener,
+        EditCityFragment.EditCityDialogListener {
     private ArrayList<City> dataList;
     private ListView cityList;
     private CityArrayAdapter cityAdapter;
+    private int pos;
     @Override
     public void addCity(City city) {
         cityAdapter.add(city);
+        cityAdapter.notifyDataSetChanged();
+    }
+    @Override
+    public void editCity(City city, int position) {
+        dataList.set(position, city);
         cityAdapter.notifyDataSetChanged();
     }
     @Override
@@ -38,6 +47,17 @@ public class MainActivity extends AppCompatActivity implements
         fab.setOnClickListener(v -> {
             new AddCityFragment().show(getSupportFragmentManager(), "Add City");
         });
+
+        cityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                City selectedCity = dataList.get(position);
+                pos = position;
+                new EditCityFragment().newInstance(selectedCity, position).show(getSupportFragmentManager(), "Edit City");
+            }
+        });
+
+
 
     }
 }
